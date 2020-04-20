@@ -336,7 +336,7 @@ QPalette QGtkStyle::standardPalette() const
     if (d->isThemeAvailable()) {
         GtkStyle *style = d->gtkStyle();
         GtkWidget *gtkButton = d->gtkWidget("GtkButton");
-        GtkWidget *gtkEntry = d->getTextColorWidget();
+        GtkWidget *gtkEntry = d->gtkWidget("GtkTreeView");
         GdkColor gdkBg, gdkBase, gdkText, gdkForeground, gdkSbg, gdkSfg, gdkaSbg, gdkaSfg;
         QColor bg, base, text, fg, highlight, highlightText, inactiveHighlight, inactiveHighlightedTExt;
         gdkBg = style->bg[GTK_STATE_NORMAL];
@@ -411,6 +411,9 @@ QPalette QGtkStyle::standardPalette() const
             text = QColor(gdkText.red>>8, gdkText.green>>8, gdkText.blue>>8);
             palette.setColor(QPalette::ToolTipText, text);
         }
+		// we need colors that are readable on both black and white backgrounds for maemo
+        palette.setColor(QPalette::Link, QColor(128, 128, 255)); // light blue
+        palette.setColor(QPalette::LinkVisited, QColor(192, 128, 255)); // light magenta
     }
     return palette;
 }
